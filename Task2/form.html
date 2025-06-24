@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interactive Web Project</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    header {
+      background-color: #0066cc;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #004999;
+      padding: 0.5rem;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 1rem;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      padding: 2rem;
+    }
+
+    section {
+      background-color: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    /* Contact Form */
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    form label {
+      margin-top: 10px;
+    }
+
+    form input, form textarea {
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    form button {
+      margin-top: 15px;
+      padding: 10px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    form button:hover {
+      background-color: #218838;
+    }
+
+    /* To-Do List */
+    #todo-input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+    }
+
+    #todo-list li {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+
+    #todo-list li button {
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    /* Responsive Layout */
+    @media (max-width: 768px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>My Interactive Web Page</h1>
+  </header>
+
+  <nav>
+    <a href="#contact">Contact</a>
+    <a href="#todo">To-Do List</a>
+  </nav>
+
+  <main>
+    <!-- Contact Form Section -->
+    <section id="contact">
+      <h2>Contact Form</h2>
+      <form id="contact-form">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+
+        <label for="message">Message:</label>
+        <textarea id="message" rows="4" required></textarea>
+
+        <button type="submit">Submit</button>
+      </form>
+    </section>
+
+    <!-- To-Do List Section -->
+    <section id="todo">
+      <h2>To-Do List</h2>
+      <input type="text" id="todo-input" placeholder="Enter a task...">
+      <ul id="todo-list"></ul>
+    </section>
+  </main>
+
+  <script>
+    // Form Validation
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('name');
+      const email = document.getElementById('email');
+      const message = document.getElementById('message');
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+      if (!name.value || !email.value || !message.value) {
+        alert('Please fill out all fields.');
+        return;
+      }
+
+      if (!email.value.match(emailPattern)) {
+        alert('Please enter a valid email address.');
+        return;
+      }
+
+      alert('Form submitted successfully!');
+      this.reset();
+    });
+
+    // To-Do List
+    const todoInput = document.getElementById('todo-input');
+    const todoList = document.getElementById('todo-list');
+
+    todoInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const task = todoInput.value.trim();
+        if (task) {
+          const li = document.createElement('li');
+          li.innerHTML = $;{task} <button onclick="this.parentElement.remove()">Remove</button>;
+          todoList.appendChild(li);
+          todoInput.value = '';
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>

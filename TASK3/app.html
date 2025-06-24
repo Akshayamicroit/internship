@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Advanced Web Project</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Base styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f4f4f4;
+      color: #333;
+      padding: 0;
+    }
+
+    header {
+      background-color: #004080;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      padding: 2rem;
+    }
+
+    section {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    /* Carousel */
+    .carousel-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .carousel-image {
+      width: 100%;
+      max-width: 400px;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .carousel-controls {
+      margin-top: 10px;
+    }
+
+    .carousel-controls button {
+      margin: 0 5px;
+      padding: 8px 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .carousel-controls button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Joke display */
+    #joke {
+      font-style: italic;
+      margin-top: 10px;
+    }
+
+    #fetch-joke-btn {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #fetch-joke-btn:hover {
+      background-color: #218838;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      main {
+        padding: 1rem;
+      }
+
+      .carousel-image {
+        height: 200px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 1.5rem;
+      }
+
+      .carousel-image {
+        height: 150px;
+      }
+
+      .carousel-controls button {
+        padding: 6px 10px;
+      }
+
+      #fetch-joke-btn {
+        padding: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Advanced Web Project</h1>
+  </header>
+
+  <main>
+
+    <!-- Image Carousel Section -->
+    <section>
+      <h2>Image Carousel</h2>
+      <div class="carousel-container">
+        <img id="carousel-image" class="carousel-image" src="" alt="Carousel Image">
+        <div class="carousel-controls">
+          <button onclick="prevImage()">Prev</button>
+          <button onclick="nextImage()">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fetch API Section -->
+    <section>
+      <h2>Random Joke (API Fetch)</h2>
+      <button id="fetch-joke-btn">Get a Joke</button>
+      <p id="joke">Click the button to load a joke.</p>
+    </section>
+
+  </main>
+
+  <script>
+    // Image Carousel
+    const images = [
+      "https://picsum.photos/id/1015/600/400",
+      "https://picsum.photos/id/1025/600/400",
+      "https://picsum.photos/id/1035/600/400",
+      "https://picsum.photos/id/1045/600/400"
+    ];
+    let currentImageIndex = 0;
+
+    const carouselImage = document.getElementById('carousel-image');
+
+    function showImage(index) {
+      carouselImage.src = images[index];
+    }
+
+    function nextImage() {
+      currentImageIndex = (currentImageIndex + 1) % images.length;
+      showImage(currentImageIndex);
+    }
+
+    function prevImage() {
+      currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+      showImage(currentImageIndex);
+    }
+
+    // Initialize with first image
+    showImage(currentImageIndex);
+
+    // Fetch Joke from API
+    const jokeBtn = document.getElementById('fetch-joke-btn');
+    const jokeText = document.getElementById('joke');
+
+    jokeBtn.addEventListener('click', () => {
+      fetch('https://official-joke-api.appspot.com/random_joke')
+        .then(response => response.json())
+        .then(data => {
+          jokeText.textContent = `${data.setup} - ${data.punchline}`;
+        })
+        .catch(() => {
+          jokeText.textContent = "Failed to fetch a joke. Please try again.";
+        });
+    });
+  </script>
+
+</body>
+</html>
